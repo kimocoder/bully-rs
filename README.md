@@ -22,7 +22,7 @@
 To build the tool from source, clone the repository and use `cargo`:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/kimocoder/bully-rs.git
 cd bully-rs
 cargo build --release
 ```

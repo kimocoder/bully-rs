@@ -1,7 +1,7 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about = "Bully-RS: WPS PIN Brute-force tool")]
+#[command(author, version = "v2.00", about = "Bully-RS: WPS PIN Brute-force tool")]
 pub struct Args {
     /// Wireless interface
     #[arg(index = 1)]

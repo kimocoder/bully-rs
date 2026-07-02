@@ -26,7 +26,7 @@ impl RawSocket {
             return Err(anyhow!("Failed to create raw socket: {}", io::Error::last_os_error()));
         }
 
-        let ifindex = unsafe { if_nametoindex(interface.as_ptr() as *const libc::c_char) };
+        let if_name = std::ffi::CString::new(interface).unwrap(); let ifindex = unsafe { if_nametoindex(if_name.as_ptr()) };
         if ifindex == 0 {
             unsafe { libc::close(fd) };
             return Err(anyhow!("Invalid interface name: {}", interface));

@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
         .init();
 
     if !args.suppress {
-        info!("Bully-RS v0.1.0");
+        info!("Bully-RS v2.00");
         info!("Interface: {}", args.interface);
         info!("Target BSSID: {}", args.bssid);
     }

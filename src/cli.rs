@@ -3,13 +3,17 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version = "v2.00", about = "Bully-RS: WPS PIN Brute-force tool")]
 pub struct Args {
+    /// Scan for WPS-enabled access points
+    #[arg(short = 's', long)]
+    pub scan: bool,
+
     /// Wireless interface
     #[arg(index = 1)]
     pub interface: String,
 
     /// Target BSSID
     #[arg(short = 'b', long)]
-    pub bssid: String,
+    pub bssid: Option<String>,
 
     /// Target channel
     #[arg(short = 'c', long)]

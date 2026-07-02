@@ -8,6 +8,7 @@ mod cli;
 mod mac;
 mod socket;
 mod wps;
+mod scanner;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -30,17 +31,34 @@ async fn main() -> Result<()> {
         })
         .init();
 
+    if !args.scan {
+        if args.bssid.is_none() {
+            error!("BSSID is required unless --scan is specified.");
+            return Ok(());
+        }
+    }
+
     if !args.suppress {
         info!("Bully-RS v2.00");
         info!("Interface: {}", args.interface);
-        info!("Target BSSID: {}", args.bssid);
+        if let Some(bssid) = &args.bssid {
+            info!("Target BSSID: {}", bssid);
+        }
     }
-
-    let target_mac = mac::MacAddress::from_str(&args.bssid)
-        .with_context(|| format!("Invalid BSSID: {}", args.bssid))?;
 
     let socket = socket::RawSocket::new(&args.interface)
         .with_context(|| format!("Failed to create raw socket on {}", args.interface))?;
+
+    if args.scan {
+        info!("Starting WPS scan mode...");
+        if let Err(e) = scanner::start_scanner(&socket, &args.interface) {
+            error!("Scanner error: {}", e);
+        }
+        return Ok(());
+    }
+
+    let target_mac = mac::MacAddress::from_str(&args.bssid.as_ref().unwrap())
+        .with_context(|| format!("Invalid BSSID: {}", args.bssid.as_ref().unwrap()))?;
 
     if args.pixie {
         info!("Pixie-Dust attack enabled. Attempting to recover nonce/pk...");

@@ -42,6 +42,7 @@ sudo ./target/release/bully-rs --interface wlan0 --bssid AA:BB:CC:DD:EE:FF
 ### CLI Options
 
 - `--interface <IFACE>`: Wireless interface to use (must be in monitor mode).
+- `--scan`: Scan for WPS-enabled access points.
 - `--bssid <MAC>`: Target BSSID.
 - `--pixie`: Enable Pixie-Dust attack mode.
 - `--bruteforce`: Enable brute-force mode.
